@@ -1,5 +1,15 @@
 #!/bin/bash
 
+# Ask user if they want to use SSH for GitHub
+echo "Do you want to use SSH for GitHub repositories? (y/n)"
+read -r use_ssh
+
+if [[ "$use_ssh" == "y" ]]; then
+    repo_prefix="git@github.com:"
+else
+    repo_prefix="https://github.com/"
+fi
+
 # Function to delete directories
 delete_repos() {
     echo "Deleting repositories..."
@@ -33,20 +43,20 @@ fi
 # Function to clone repositories
 clone_repos() {
     echo "Cloning repositories..."
-    git clone $depth_flag -b lineage-22.1 https://github.com/sapphire-sm6225/android_hardware_qcom-caf_common.git hardware/qcom-caf/common
-    git clone $depth_flag -b lineage-22.0-caf-sm6225 https://github.com/sapphire-sm6225/vendor_qcom_opensource_agm.git hardware/qcom-caf/sm6225/audio/agm
-    git clone $depth_flag -b lineage-22.0-caf-sm6225 https://github.com/sapphire-sm6225/vendor_qcom_opensource_arpal-lx.git hardware/qcom-caf/sm6225/audio/pal
-    git clone $depth_flag -b lineage-22.0-caf-sm6225 https://github.com/sapphire-sm6225/vendor_qcom_opensource_data-ipa-cfg-mgr.git hardware/qcom-caf/sm6225/data-ipa-cfg-mgr
-    git clone $depth_flag -b lineage-22.0-caf-sm6225 https://github.com/sapphire-sm6225/vendor_qcom_opensource_dataipa.git hardware/qcom-caf/sm6225/dataipa
-    git clone $depth_flag -b lineage-22.0-caf-sm6225 https://github.com/sapphire-sm6225/hardware_qcom_display.git hardware/qcom-caf/sm6225/display
-    git clone $depth_flag -b lineage-22.0-caf-sm6225 https://github.com/sapphire-sm6225/hardware_qcom_media.git hardware/qcom-caf/sm6225/media
-    git clone $depth_flag -b lineage-22.0-caf-sm6225 https://github.com/sapphire-sm6225/hardware_qcom_audio.git hardware/qcom-caf/sm6225/audio/primary-hal
-    git clone $depth_flag -b 15 https://github.com/sapphire-sm6225/hardware_xiaomi.git hardware/xiaomi
-    git clone $depth_flag -b 15 https://github.com/saroj-nokia/device_xiaomi_sapphire_backup.git device/xiaomi/sapphire
-    git clone $depth_flag -b 15 https://github.com/saroj-nokia/device_xiaomi_sapphire-kernel.git device/xiaomi/sapphire-kernel
-    git clone $depth_flag -b 15 https://github.com/saroj-nokia/vendor_xiaomi_sapphire.git vendor/xiaomi/sapphire
-    git clone $depth_flag -b lineage-22.0-caf-sm6225 https://github.com/sapphire-sm6225/device_qcom_sepolicy_vndr.git device/qcom/sepolicy_vndr/sm6225
-    git clone $depth_flag -b 15 https://github.com/sapphire-sm6225/device_xiaomi_sepolicy.git device/xiaomi/sepolicy
+    git clone $depth_flag -b lineage-22.1 ${repo_prefix}sapphire-sm6225/android_hardware_qcom-caf_common.git hardware/qcom-caf/common
+    git clone $depth_flag -b lineage-22.0-caf-sm6225 ${repo_prefix}sapphire-sm6225/vendor_qcom_opensource_agm.git hardware/qcom-caf/sm6225/audio/agm
+    git clone $depth_flag -b lineage-22.0-caf-sm6225 ${repo_prefix}sapphire-sm6225/vendor_qcom_opensource_arpal-lx.git hardware/qcom-caf/sm6225/audio/pal
+    git clone $depth_flag -b lineage-22.0-caf-sm6225 ${repo_prefix}sapphire-sm6225/vendor_qcom_opensource_data-ipa-cfg-mgr.git hardware/qcom-caf/sm6225/data-ipa-cfg-mgr
+    git clone $depth_flag -b lineage-22.0-caf-sm6225 ${repo_prefix}sapphire-sm6225/vendor_qcom_opensource_dataipa.git hardware/qcom-caf/sm6225/dataipa
+    git clone $depth_flag -b lineage-22.0-caf-sm6225 ${repo_prefix}sapphire-sm6225/hardware_qcom_display.git hardware/qcom-caf/sm6225/display
+    git clone $depth_flag -b lineage-22.0-caf-sm6225 ${repo_prefix}sapphire-sm6225/hardware_qcom_media.git hardware/qcom-caf/sm6225/media
+    git clone $depth_flag -b lineage-22.0-caf-sm6225 ${repo_prefix}sapphire-sm6225/hardware_qcom_audio.git hardware/qcom-caf/sm6225/audio/primary-hal
+    git clone $depth_flag -b 15 ${repo_prefix}sapphire-sm6225/hardware_xiaomi.git hardware/xiaomi
+    git clone $depth_flag -b 15 ${repo_prefix}saroj-nokia/device_xiaomi_sapphire_backup.git device/xiaomi/sapphire
+    git clone $depth_flag -b 15 ${repo_prefix}saroj-nokia/device_xiaomi_sapphire-kernel.git device/xiaomi/sapphire-kernel
+    git clone $depth_flag -b 15 ${repo_prefix}saroj-nokia/vendor_xiaomi_sapphire.git vendor/xiaomi/sapphire
+    git clone $depth_flag -b lineage-22.0-caf-sm6225 ${repo_prefix}sapphire-sm6225/device_qcom_sepolicy_vndr.git device/qcom/sepolicy_vndr/sm6225
+    git clone $depth_flag -b 15 ${repo_prefix}sapphire-sm6225/device_xiaomi_sepolicy.git device/xiaomi/sepolicy
 }
 
 # Ask user for action
@@ -58,8 +68,8 @@ if [[ "$action" == "c" ]]; then
     echo "Do you want to clone MIUI Camera? (y/n)"
     read -r miui_camera
     if [[ "$miui_camera" == "y" ]]; then
-        git clone $depth_flag -b 15 https://github.com/saroj-nokia/device_xiaomi_miuicamera-sapphire.git device/xiaomi/miuicamera-sapphire
-        git clone $depth_flag -b 15 https://gitlab.com/kibria5/vendor_xiaomi_miuicamera-sapphire.git vendor/xiaomi/miuicamera-sapphire
+        git clone $depth_flag -b 15 ${repo_prefix}saroj-nokia/device_xiaomi_miuicamera-sapphire.git device/xiaomi/miuicamera-sapphire
+        git clone $depth_flag -b 15 git@gitlab.com:kibria5/vendor_xiaomi_miuicamera-sapphire.git vendor/xiaomi/miuicamera-sapphire
     fi
 elif [[ "$action" == "d" ]]; then
     delete_repos
